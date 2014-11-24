@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CollamineUI</title>
+  <%= stylesheet_link_tag 'style' %>
+  <%= stylesheet_link_tag 'nv.ds.css' %>
+  <%= stylesheet_link_tag 'perfect-scrollbar' %>
+
+  <%= javascript_include_tag "jquery-2.1.1.min.js" %>
+  <%= javascript_include_tag "d3.min.js" %>
+  <script src="/javascripts/dimple.v2.1.0.min.js"></script>
+  <%= javascript_include_tag "epoch.min.js" %>
+  <%= javascript_include_tag "nv.d3.min.js" %>
+  <%= javascript_include_tag "primus.js" %>
+  <%= javascript_include_tag "perfect-scrollbar.min" %>
+  <%= javascript_include_tag "time" %>
+  <%= yield :head %>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>

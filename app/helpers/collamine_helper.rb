@@ -1,0 +1,2 @@
+module CollamineHelper
+end

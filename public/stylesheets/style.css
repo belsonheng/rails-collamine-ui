@@ -1,0 +1,161 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #F2F3F4;
+    font-family: Tahoma, Helvetica, Arial, sans-serif;
+}
+h1, h2, h3, h4, h5 {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+.chartCont {
+    padding: 0px 12px;
+}
+.border-bottom {
+    border-bottom: 1px dashed rgba(0, 117, 194, 0.2);
+}
+.border-right {
+    border-right: 1px dashed rgba(0, 117, 194, 0.2);
+}
+#container {
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+#container> div {
+    width: 100%;
+    background-color: #ffffff;
+}
+#logoContainer {
+    font-family: AndaleMono;
+    float: left;
+    padding: 0 10px;
+}
+#logoContainer h1 {
+    font-size: 24px;
+    color: #0075c2;
+}
+#logoContainer h4 {
+    color: #000000;
+}
+#logoContainer div p {
+    color: #719146;
+    font-size: 12px;
+    padding: 5px 0;
+}
+
+#userDetail {
+    float: right;
+}
+#userDetail div {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 14px;
+    color: #0075c2;
+    width: 270px;
+}
+#userDetail div p {
+    margin: 0;
+}
+#userDetail div p:nth-child(2) {
+    color: #0e948c;
+}
+#header div:nth-child(3) {
+    clear: both;
+    border-bottom: 1px solid #F2F3F4;
+}
+#content div {
+    display: inline-block;
+}
+#content > div {
+    margin: 0px 20px;
+}
+#content > div:nth-child(1) > div {
+    margin: 20px 0 0;
+}
+#content > div:nth-child(2) > div {
+    margin: 0 0 20px;
+}
+#url-container { 
+    font-size: 12px;
+    margin: 0px auto; 
+    padding: 0px;
+    position: relative;
+    width: 1130px;
+    height: 400px; /* Or whatever you want (eg. 400px) */
+    overflow: hidden;
+}
+#data-source-chart-container svg {
+    height: 400px;
+    width: 500px;
+}
+#line-container {
+    height: 400px;
+    width: 600px;
+}
+/*
+#line-container .original .line {
+    stroke: #0075c2;
+    stroke-width: 2;
+}
+#line-container .collamine .line {
+    stroke: #1aaf5d;
+    stroke-width: 2;
+}*/
+#footer p {
+    margin: 0;
+    font-size: 9pt;
+    color: black;
+    padding: 5px 0;
+    text-align: center;
+}
+
+/*
+.graph .axis {
+    stroke-width: 1;
+}
+
+.graph .axis .tick line {
+    stroke: black;
+}
+
+.graph .axis .tick text {
+    fill: black;
+    font-size: 0.7em;
+}
+
+.graph .axis .domain {
+    fill: none;
+    stroke: black;
+}
+
+.graph .group {
+    fill: none;
+    stroke: black;
+    stroke-width: 1.5;
+}
+circle.original {
+    fill: #0075c2;
+    stroke-width: 3;
+}
+circle.collamine {
+    fill: #1aaf5d;
+    stroke-width: 3;
+}
+.tooltip {
+    background: none repeat scroll 0 0 #282828;
+    border: 0 solid #ffffff;
+    border-radius: 8px;
+    color: #ffffff;
+    font: 12px sans-serif;
+    height: 28px;
+    padding: 2px;
+    pointer-events: none;
+    position: absolute;
+    text-align: center;
+    width: 90px;
+}
+*/
