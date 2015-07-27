@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   get 'collamine/index'
-
+  get 'collamine/cm'
+  get 'collamine/download'
+  get 'collamine/line'
+  get 'collamine/ajax'
+  get 'collamine/pie'
+  get 'collamine/watch'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

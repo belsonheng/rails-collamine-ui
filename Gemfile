@@ -39,3 +39,5 @@ gem 'mongoid', '~> 4.0.0'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+gem 'usagewatch'
+

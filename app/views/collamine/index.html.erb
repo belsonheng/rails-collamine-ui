@@ -5,7 +5,16 @@
   });
 </script-->
 <script type="text/javascript">
+$('#pie').epoch({ type: 'pie', data: [
+            {label: 'A', value: 20},
+            {label: 'C', value: 35}
+        ] });
+</script>
+
+<script type="text/javascript">
 <!--
+
+
 var pieChartData =  <%= raw @pie_chart_data.to_json %>;
 var pieChart;
 nv.addGraph(function() {
@@ -88,271 +97,9 @@ primus.on('open', function () {
     $('#url-container').perfectScrollbar();
   });
 });
-/*	
-	var now = ((new Date()).getTime() / 1000)|0;
-	var lineChartData = [
-	  // First series
-	  {
-	    label: "original",
-	    values: [ {time: now, y: 0} ]
-	  },
 
-	  // The second series
-	  {
-	    label: "collamine",
-	    values: [ {time: now, y: 1} ]
-	  }
-	];
-
-	var myChart = $('#line-container').epoch({
-					type: 'time.line',
-					data: lineChartData,
-					axes: ['left', 'bottom', 'right'],
-					ticks: { time: 10, left: 2 , right: 2},
-					domain: [0, 5],
-					margins: { top: 5, right: 30, bottom: 100, left: 40 }
-				});
-
-	var primus = Primus.connect('ws://localhost:9002');
-
-//	setInterval(function() { 
-		primus.on('open', function () {
-		  primus.on('data', function (json) {
-		  	var source = json.data[1].source;
-		    var y1 = 0, y2 = 0;
-		    if (source == 'original') {
-		      y1 = 1;
-		      if (pieChartData[0].label == 'Original') {
-		      	pieChartData[0].value += 1;
-		      }
-		      if (lineChartData[0].key == 'Original') {
-		      	lineChartData[0].values.push([Date.now(), lineChartData[0].values[lineChartData[0].values.length-1][1]+1]);
-		      }
-		    } else if (source == 'collamine') {
-		      y2 = 1;
-		      if (pieChartData[1].label == 'Collamine') {
-		      	pieChartData[1].value += 1;
-		      }
-		      if (lineChartData[1].key == 'Collamine') {
-		      	lineChartData[1].values.push([Date.now(), lineChartData[1].values[lineChartData[1].values.length-1][1]+1]);
-		      }
-		    }
-		    pieChart.update();
-		    
-		    var time = ((new Date()).getTime() / 1000)|0;
-		    myChart.push([{ time: time, y: y1 }, { time: time, y: y2 }]);
-		  });
-		});
-		/*
-		var time = ((new Date()).getTime() / 1000)|0;
-		var x1 = { time: time, y: 0};
-		var x2 = { time: time, y: 0};
-		myChart.push([x1,x2]);
-		*/
-//	}, 1000);
 });
 
-/*******************************************
-d3 code starts here
-********************************************
-var chart = (function() {
-
-	var data = [
-	        {
-	        	key: "original", 
-	         	value: [ {"x": "13:24:20", "y": 2}, 
-	         			 {"x": "14:24:20", "y": 3}, 
-	         			 {"x": "15:24:20", "y": 0}, 
-	         			 {"x": "16:24:20", "y": 1} ]
-	        },	
-	        {
-	        	key: "collamine",
-	        	value: [ {"x": "13:24:20", "y": 1}, 
-	        			 {"x": "14:24:20", "y": 1}, 
-	        			 {"x": "15:24:20", "y": 7},
-	        			 {"x": "16:24:20", "y": 5} ]
-	        }
-	    ];
-
-	init = function() {
-	    var margin = { top: 10, right: 10, bottom: 30, left: 50 },
-        width = 1100 - margin.left - margin.right,
-        height = 350 - margin.top - margin.bottom;
-
-		var parseDate = d3.time.format("%H:%M:%S").parse;
-		var color = ['#0075c2', '#1aaf5d'];
-
-	    // Configure the x scale
-	    var x = d3.time.scale().domain(d3.extent(data[0].value, function(d) { return parseDate(d.x); }))
-	            .range([0, width]);
-
-	    // Configure the y scale
-	    var y = d3.scale.linear().domain([0,10])
-	            .range([height, 0]);
-
-        // Configure the x axis
-	    var xAxis = d3.svg.axis()
-	                .scale(x)
-	                .orient("bottom")
-	                .tickFormat(d3.time.format(("%H:%M:%S")));
-
-  		// Configure the y axis
-	    var yAxis = d3.svg.axis()
-	                .scale(y)
-	                .orient("left");
-
-	    // Set up container for the drawing svg
-	    var svg = d3.select("#total-pages-chart-container").append("svg")
-	        .attr("width", width + margin.left + margin.right)
-	        .attr("height", height + margin.top + margin.bottom)
-	        .append("g")
-	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-	    // Create the x axis
-	    svg.append("g")
-	        .attr("class", "x axis")
-	        .attr("transform", "translate(0, " + height + ")")
-	        .call(xAxis);
-
-	    // Create the label for x axis
-    	svg.append("text")
-        	.attr("x", width / 2)
-        	.attr("y", height + margin.top + margin.bottom)
-	        .style("text-anchor", "middle")
-	        .text("Time");
-
-  		// Create the y axis
-	    svg.append("g")
-	        .attr("class", "y axis")
-	        .call(yAxis);
-
-	    // Create the line function
-	    var line = d3.svg.line()
-                   .interpolate("linear")
-			       .x(function(d) { return x(parseDate(d.x)); })
-			       .y(function(d) { return y(d.y); });
-
-		// Map key and values for each group in data
- 		data.forEach(function(d, i) {
-	    	var key = d.key;
-		    d.value.forEach(function(d) {
-		        d.value = +d.value; 
-		        d.key = key;
-		    });
-	    	//svg.append("path")
-	        //   .attr("d", line(d.value))
-	        //   .attr("stroke", color[i])
-			//   .attr("stroke-width", 2)
-			//   .attr("fill", "none");
-	    });
-
- 		// Create the lines by drawing path
-		svg.selectAll(".branch")
-		    .data(data)
-		    .enter().append("g")
-		    .attr("class", "branch")
-		    .append("path")
-		    .attr("class", "line")
-		    .attr("d", function(d) { return line(d.value); })
-		    .style("stroke", function (d, i) { return color[i]; })
-		    .style("fill", "none")
-		    .style("stroke-width", 3);
-
- 		// Create the tooltip
-		var div = d3.select('#total-pages-chart-container')
-					.append("div")
-		  			.attr("class", "tooltip")
-  					.style("opacity", 0);
-		svg.selectAll("g.dot")
-	        .data(data)
-	        .enter().append("g")
-	        .attr("class", "dot")
-	        .selectAll("circle")
-	        .data(function(d) { return d.value; })
-	        .enter().append("circle")
-	        .attr("class", function(d) { return d.key; })
-	        .attr("r", 5)
-	        .attr("cx", function(d,i) {  return x(parseDate(d.x)); })
-	        .attr("cy", function(d,i) { return y(d.y); })
-	      	.on("mouseover", function(d) {    	// when the mouse goes over a circle, do the following
-	      		div.transition().duration(200)  // declare the transition properties to bring fade-in div
-	        		.style("opacity", .9);              // and go all the way to an opacity of .9
-	      		div.html(d.x + '<br/>' + '<b>' + d.y + '</b>' + (d.y > 1 ? ' pages ' : ' page ') + 'inserted')
-	        		.style("left", (d3.event.pageX - margin.left) + "px")     	// move it in the x direction 
-	        		.style("top", (d3.event.pageY - 28) + "px");  				// move it in the y direction
-	      	})
-	    	.on("mouseout", function(d) { div.transition().duration(500).style("opacity", 0); });
-
-	    setInterval(function() {
-	    	updateData();
-	    }, 1000);
-
-		function updateData(json) {
-			var source = json['source'];
-		    // Get the data again
-			data[0].value.push({"x": "17:24:20", "y": source == 'original' ? 1 : 0});
-			data[1].value.push({"x": "17:24:20", "y": source == 'collamine' ? 1 : 0});
-
-			// Map key and values for each group in data
-	 		data.forEach(function(d, i) {
-		    	var key = d.key;
-			    d.value.forEach(function(d) {
-			        d.value = +d.value; 
-			        d.key = key;
-			    });
-		    	//svg.append("path")
-		        //   .attr("d", line(d.value))
-		        //   .attr("stroke", color[i])
-				//   .attr("stroke-width", 2)
-				//   .attr("fill", "none");
-		    });
-		    // Scale the range of the data again 
-		    // Configure the x scale
-		    x.domain(d3.extent(data[0].value, function(d) { return parseDate(d.x); }))
-		            .range([0, width]);
-
-		    // Select the section we want to apply our changes to
-		    var svg = d3.select("#total-pages-chart-container");
-		    var paths = svg.selectAll(".branch").data(data);
-		    var circles = svg.selectAll("g.dot").data(data).selectAll("circle").data(function(d) { return d.value; });
-
-		    // Make the changes
-	        paths.selectAll(".line")   // change the line
-	              .transition().ease("linear").duration(750)
-	              .attr("d", function(d) { return line(d.value); });
-	              
-	        svg.select(".x.axis") // change the x axis
-	            .transition().ease("linear").duration(750)
-	            .call(xAxis);
-
-	        circles.transition().ease("linear").duration(750)
-			        .attr("cx", function(d,i) {  return x(parseDate(d.x)); })
-			        .attr("cy", function(d,i) { return y(d.y); });
-
-			var div = d3.select('#total-pages-chart-container')
-					.append("div")
-		  			.attr("class", "tooltip")
-  					.style("opacity", 0);
-			circles.enter().append("circle")
-				    .attr("class", function(d) { return d.key; })
-			        .attr("r", 5)
-			        .attr("cx", function(d,i) {  return x(parseDate(d.x)); })
-			        .attr("cy", function(d,i) { return y(d.y); })
-			      	.on("mouseover", function(d) {    	// when the mouse goes over a circle, do the following
-			      		div.transition().duration(200)  // declare the transition properties to bring fade-in div
-			        		.style("opacity", .9);              // and go all the way to an opacity of .9
-			      		div.html(d.x + '<br/>' + '<b>' + d.y + '</b>' + (d.y > 1 ? ' pages ' : ' page ') + 'inserted')
-			        		.style("left", (d3.event.pageX - margin.left) + "px")     	// move it in the x direction 
-			        		.style("top", (d3.event.pageY - 28) + "px");  				// move it in the y direction
-			      	})
-			    	.on("mouseout", function(d) { div.transition().duration(500).style("opacity", 0); });
-			circles.exit().remove();
-		}
-	};
-	return { init: init };
-})();
-*/
--->
 </script>
 <% end %>
 <div id='container' ng-controller="MainCtrl">
@@ -370,7 +117,7 @@ var chart = (function() {
     </div>
     <div class='border-bottom' id='content'>
 			<div class='border-bottom'>
-				<div class='chartCont border-right' id='data-source-chart-container'><svg></svg></div>
+				<div class='chartCont border-right'></div>
 				<div class='chartCont' id='line-container'></div>
 			</div>
 			<div>				
@@ -380,4 +127,5 @@ var chart = (function() {
     <div id='footer'>
         <p>Powered by Collamine</p>
     </div>
+    <div id='pie'></div>
 </div>
